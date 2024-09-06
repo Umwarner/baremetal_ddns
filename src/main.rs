@@ -1,14 +1,12 @@
-//Simple DDNS utility to update Baremetal.com domains.
-//Gets public ipv4 from ipify.org
-//
-//Usage:
-//baremetal_ddns HOST key
-
+use core::panic;
 use std::{collections::HashMap, env};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args: Vec<_> = env::args().collect();
+    if args.len() < 2 {
+        panic!("Not enough args!")
+    }
 
     let response = reqwest::get("https://api.ipify.org?format=json")
         .await?
